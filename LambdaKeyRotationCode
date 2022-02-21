@@ -24,7 +24,7 @@ def get_usr_old_keys( keyAge ):
     
         # Iterate for all users
         for key in accessKeys['AccessKeyMetadata']:
-            if key['CreateDate'].date() <= timeLimit.date():
+            if key['Status'] == 'Active' and key['CreateDate'].date() <= timeLimit.date():
                 usrsWithOldKeys['Users'].append({ 'UserName': k['UserName'], 'KeyAgeInDays': (datetime.date.today() - key['CreateDate'].date()).days })
 
         # If no users found with older keys, add message in response
