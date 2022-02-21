@@ -7,7 +7,7 @@ globalVars['Owner']                 = "ASCplatforms"
 globalVars['Environment']           = "Test"
 globalVars['REGION_NAME']           = "us-east-1"
 globalVars['tagName']               = "key_rotation_test"
-globalVars['key_age']               = "90"
+globalVars['key_age']               = "180"
 globalVars['SecOpsTopicArn']        = ""
 
 def get_usr_old_keys( keyAge ):
@@ -47,7 +47,7 @@ def get_usr_old_keys( keyAge ):
 
 def lambda_handler(event, context):   
     # Set the default cutoff if env variable is not set
-    globalVars['key_age'] = int(os.getenv('key_age',90))
+    globalVars['key_age'] = int(os.getenv('key_age',180))
     globalVars['SecOpsTopicArn']=str(os.getenv('SecOpsTopicArn'))
 
     return get_usr_old_keys( globalVars['key_age'] )
