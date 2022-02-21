@@ -35,8 +35,10 @@ def get_usr_old_keys( keyAge ):
 
     try:
         snsClient.get_topic_attributes( TopicArn= globalVars['SecOpsTopicArn'] )
-        snsClient.publish(TopicArn = globalVars['SecOpsTopicArn'], Message = json.dumps(usrsWithOldKeys, indent=4) )
-        usrsWithOldKeys['SecOpsEmailed']="Yes"
+        usrsWithOldKeys['SecOpsEmailed']="No - No expired keys found"
+        if usrsWithOldKeys['Users']:
+            usrsWithOldKeys['SecOpsEmailed']="Yes"
+            snsClient.publish(TopicArn = globalVars['SecOpsTopicArn'], Message = json.dumps(usrsWithOldKeys, indent=4) )
     except ClientError as e:
         usrsWithOldKeys['SecOpsEmailed']="No - SecOpsTopicArn is Incorrect"
 
